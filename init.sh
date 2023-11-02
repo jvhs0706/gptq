@@ -20,3 +20,4 @@ python download-data.py
 deactivate
 
 rm -rf ./TEMP_ENV
+rm .git/hooks/pre-push
