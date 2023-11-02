@@ -6,4 +6,5 @@ opt175b
 *.pt
 *egg-info*
 *.out
-*.sh
+facebook/
+data/
