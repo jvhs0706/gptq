@@ -7,6 +7,11 @@ from gptq import *
 from modelutils import *
 from quant import *
 
+import os
+
+# download the models
+os.environ['TRANSFORMERS_CACHE']="./model-storage"
+
 
 def get_llama(model):
     import torch
@@ -15,8 +20,8 @@ def get_llama(model):
     torch.nn.init.kaiming_uniform_ = skip
     torch.nn.init.uniform_ = skip
     torch.nn.init.normal_ = skip
-    from transformers import LlamaForCausalLM
-    model = LlamaForCausalLM.from_pretrained(model, torch_dtype='auto')
+    from transformers import AutoModelForCausalLM
+    model = AutoModelForCausalLM.from_pretrained(model, local_files_only = True)
     model.seqlen = 2048
     return model
 
@@ -268,7 +273,7 @@ if __name__ == '__main__':
         help='Whether to run the RTN baseline.'
     ) 
     parser.add_argument(
-        '--wbits', type=int, default=16, choices=[2, 3, 4, 8, 16],
+        '--wbits', type=int, default=16, choices=[1, 2, 3, 4, 8, 16],
         help='#bits to use for quantization; use 16 for evaluating base model.'
     )
     parser.add_argument(
